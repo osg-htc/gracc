@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>GRACE Operations - GRACC Documentation</title>
+  <title>Operations - GRACC Documentation</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -18,7 +18,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "GRACE Operations";
+    var mkdocs_page_name = "Operations";
     var mkdocs_page_input_path = "ops/services.md";
     var mkdocs_page_url = "/ops/services/";
   </script>
@@ -97,15 +97,15 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../../dev-docs/install-grace-db/">GRACE Installation</a>
+    <a class="" href="../../dev-docs/install-grace-db/">Installation</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../dev-docs/backups/">GRACE Backup Documentation</a>
+    <a class="" href="../../dev-docs/backups/">Backup Documentation</a>
                 </li>
                 <li class=" current">
                     
-    <a class="current" href="./">GRACE Operations</a>
+    <a class="current" href="./">Operations</a>
     <ul class="subnav">
             
     <li class="toctree-l3"><a href="#gracc-services">GRACC Services</a></li>
@@ -122,6 +122,10 @@
     
 
     </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../troubleshoot/">Troubleshooting</a>
                 </li>
     </ul>
 	    </li>
@@ -152,7 +156,7 @@
         
       
     
-    <li>GRACE Operations</li>
+    <li>Operations</li>
     <li class="wy-breadcrumbs-aside">
       
         <a href="https://github.com/opensciencegrid/gracc/edit/master/docs/ops/services.md"
@@ -276,11 +280,72 @@ includes a RabbitMQ exhchange the records should be sent to.</p>
 summarize periods.</p>
 <ul>
 <li>!! Installed from copr (https://copr.fedorainfracloud.org/coprs/djw8605/GRACC/)</li>
-<li>Running under systemd: </li>
-<li>Every 15 minutes, resummarize the last 7 days: <code>graccsumperiodic.service</code> and <code>graccsumperiodic.timer</code></li>
-<li>Every 24 hours, resummarize the last 365 days: <code>graccsumperiodicyearly.service</code> and <code>graccsumperiodicyearly.timer</code></li>
+<li>Running under systemd: <code>graccsumperiodic.service</code> and <code>graccsumperiodic.timer</code></li>
 <li>Config in <code>/etc/graccsum/config.d/gracc-summary.toml</code></li>
 </ul>
+<h4 id="apel-reporting">APEL reporting</h4>
+<ul>
+<li>Source at <a href="https://hub.docker.com/r/opensciencegrid/gracc-apel/">OSG docker</a> <ul>
+<li><code>docker {pull, run} opensciencegrid/gracc-apel</code></li>
+</ul>
+</li>
+<li>Running under systemd: <code>gracc-apel.service</code> and <code>gracc-apel.timer</code></li>
+<li>Registered service certificate with <a href="../apel-admins@stfc.ac.uk">APEL admins</a> needed <ul>
+<li>in docker we use:
+<code>$ openssl x509 -in /etc/grid-security/apel/apelcert.pem -noout -subject
+    subject= /DC=org/DC=opensciencegrid/O=Open Science Grid/OU=Services/CN=apel/hcc-grace.unl.edu</code></li>
+<li>SELinux prevents inheritance of certificates, so this must be set on docker master node: <code>chcon -Rt svirt_sandbox_file_t /etc/grid-security/apel/</code></li>
+</ul>
+</li>
+</ul>
+<h5 id="configuring-gracc-apel-in-systemd">Configuring GRACC-APEL in systemd</h5>
+<ul>
+<li><code>gracc-apel.service</code> configure, enable, start, test</li>
+</ul>
+<pre><code>    $ cat /lib/systemd/system/gracc-apel.service 
+      [Unit]
+      Description=GRACC APEL reporting Docker container
+
+      [Service]
+      Type=oneshot
+      ExecStart=/bin/docker run -v /etc/grid-security/apel/apelcert.pem:/etc/grid-security/apel/apelcert.pem -v /etc/grid-security/apel/apelkey.pem:/etc/grid-security/apel/apelkey.pem opensciencegrid/gracc-apel
+
+    $ systemctl enabled gracc-apel.service
+    $ systemctl start gracc-apel.service
+    $ systemctl status gracc-apel.service
+</code></pre>
+
+<p>To run periodically:
+* <code>gracc-apel.timer</code> configure, enable, start</p>
+<pre><code>    $ cat /lib/systemd/system/gracc-apel.timer 
+    [Unit]
+    Description=Run GRACC-to-APEL reporting script
+
+    [Timer]
+    # Explicitly declare service that this timer is responsible for
+    Unit=gracc-apel.service
+    # Runs 'gracc-apel' relative to when the *timer-unit* has been activated
+    OnActiveSec=1hour
+    # Runs 'gracc-apel' relative to when *service-unit* was last deactivated
+    OnUnitInactiveSec=1hour
+
+    # Randomize runtime by a small amount each run.
+    RandomizedDelaySec=2min
+
+    [Install]
+    WantedBy=timers.target
+    $ systemctl enabled gracc-apel.timer
+    $ systemctl start gracc-apel.timer
+    $ systemctl status gracc-apel.timer
+</code></pre>
+
+<pre><code>* To check if `gracc-timer.timer` runs:
+</code></pre>
+<pre><code>    $ systemctl list-timers *apel*
+    NEXT                         LEFT       LAST                         PASSED    UNIT             ACTIVATES
+    Mon 2017-05-22 17:48:37 CDT  21min left Mon 2017-05-22 16:46:40 CDT  40min ago gracc-apel.timer gracc-apel.service
+</code></pre>
+
 <h3 id="grafana">Grafana</h3>
 <ul>
 <li>Installed from official Grafana yum repo</li>
@@ -401,8 +466,10 @@ nodes, e.g. <code>sudo ansible elasticsearch -a 'uptime'</code>. Configuration i
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="../troubleshoot/" class="btn btn-neutral float-right" title="Troubleshooting">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-        <a href="../../dev-docs/backups/" class="btn btn-neutral" title="GRACE Backup Documentation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+        <a href="../../dev-docs/backups/" class="btn btn-neutral" title="Backup Documentation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -434,6 +501,8 @@ nodes, e.g. <code>sudo ansible elasticsearch -a 'uptime'</code>. Configuration i
       
         <span><a href="../../dev-docs/backups/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
+      
+        <span style="margin-left: 15px"><a href="../troubleshoot/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

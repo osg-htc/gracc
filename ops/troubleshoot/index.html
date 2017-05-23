@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Direct Queries - GRACC Documentation</title>
+  <title>Troubleshooting - GRACC Documentation</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Direct Queries";
-    var mkdocs_page_input_path = "user/direct.md";
-    var mkdocs_page_url = "/user/direct/";
+    var mkdocs_page_name = "Troubleshooting";
+    var mkdocs_page_input_path = "ops/troubleshoot.md";
+    var mkdocs_page_url = "/ops/troubleshoot/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -59,27 +59,15 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../standard/">Standard Interfaces</a>
+    <a class="" href="../../user/standard/">Standard Interfaces</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../grafana/">Custom Grafana</a>
+    <a class="" href="../../user/grafana/">Custom Grafana</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Direct Queries</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#direct-access">Direct Access</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#curl">cURL</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../../user/direct/">Direct Queries</a>
                 </li>
     </ul>
 	    </li>
@@ -117,11 +105,25 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../../ops/services/">Operations</a>
+    <a class="" href="../services/">Operations</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../../ops/troubleshoot/">Troubleshooting</a>
+    <a class="current" href="./">Troubleshooting</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#troubleshooting-of-gracc-services">Troubleshooting of GRACC services</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#helpful-dashboards">Helpful dashboards</a></li>
+        
+            <li><a class="toctree-l4" href="#issues">Issues</a></li>
+        
+        </ul>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -148,14 +150,14 @@
     
       
         
-          <li>User Guide &raquo;</li>
+          <li>Operator Docs &raquo;</li>
         
       
     
-    <li>Direct Queries</li>
+    <li>Troubleshooting</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/opensciencegrid/gracc/edit/master/docs/user/direct.md"
+        <a href="https://github.com/opensciencegrid/gracc/edit/master/docs/ops/troubleshoot.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -165,64 +167,29 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="direct-access">Direct Access</h1>
-<p>GRACC runs on <a href="https://www.elastic.co/products/elasticsearch">Elasticsearch</a>,
-which can be accessed via many <a href="https://www.elastic.co/guide/en/elasticsearch/client/community/current/index.html">client libraries</a> and tools. </p>
-<p>A read-only endpoint into the GRACC Elasticsearch is available at https://gracc.opensciencegrid.org/q.</p>
-<h2 id="curl">cURL</h2>
-<p>The Elasticsearch <a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.1/query-dsl.html">query DSL</a> is quite complex, but is also very powerful.
-Below is a relatively simple but non-trivial example of directly querying GRACC from the 
-command-line via cURL. This query will calculate the number of payload jobs run by 
-LIGO in January 2017, and the total wall time they used. </p>
-<pre><code>curl 'https://gracc.opensciencegrid.org/q/gracc.osg.summary/_search?pretty' --data-binary '
-{
-    &quot;query&quot;: {
-        &quot;query_string&quot;: {
-            &quot;query&quot;: &quot;VOName:ligo AND ResourceType:Payload AND EndTime:[2017-01-01 TO 2017-02-01]&quot;
-        }
-    },
-    &quot;aggs&quot;: {
-        &quot;walltime&quot;: {
-            &quot;sum&quot;: {
-                &quot;field&quot;: &quot;CoreHours&quot;
-            }
-        },
-        &quot;jobs&quot;: {
-            &quot;sum&quot;: {
-                &quot;field&quot;: &quot;Njobs&quot;
-            }
-        }
-    },
-    &quot;size&quot;: 0
-}'
-</code></pre>
-
-<p>Which might return:</p>
-<pre><code>{
-  &quot;took&quot; : 2,
-  &quot;timed_out&quot; : false,
-  &quot;_shards&quot; : {
-    &quot;total&quot; : 6,
-    &quot;successful&quot; : 6,
-    &quot;failed&quot; : 0
-  },
-  &quot;hits&quot; : {
-    &quot;total&quot; : 68,
-    &quot;max_score&quot; : 0.0,
-    &quot;hits&quot; : [ ]
-  },
-  &quot;aggregations&quot; : {
-    &quot;jobs&quot; : {
-      &quot;value&quot; : 20626.0
-    },
-    &quot;walltime&quot; : {
-      &quot;value&quot; : 41323.43916666666
-    }
-  }
-}
-</code></pre>
-
-<p>Compare to the <a href="https://gracc.opensciencegrid.org/dashboard/db/vo-summary?from=1483228800000&amp;to=1485907200000&amp;var-interval=$__auto_interval&amp;var-vo=ligo&amp;var-type=Payload">VO Summary</a> dashboard in Grafana.</p>
+                <h1 id="troubleshooting-of-gracc-services">Troubleshooting of GRACC services</h1>
+<h2 id="helpful-dashboards">Helpful dashboards</h2>
+<ul>
+<li><a href="https://gracc.opensciencegrid.org/dashboard/db/gracc-collector-stats?refresh=1m&amp;orgId=1">GRACC Collector Stats</a></li>
+<li><a href="https://gracc.opensciencegrid.org/dashboard/db/rabbitmq-queues?refresh=1m&amp;orgId=1">RabbitMQ queues</a></li>
+<li><a href="https://gracc.opensciencegrid.org/dashboard/db/probe-record-rate?orgId=1&amp;var-Probe=slurm:grid1.oscer.ou.edu">Probe Record Rate</a> - example for given CE<ul>
+<li>in addition, check on <a href="https://gracc.opensciencegrid.org/kibana/app/kibana#/discover?_g=(refreshInterval:(%27$$hashKey%27:%27object:1968%27,display:%271%20minute%27,pause:!f,section:2,value:60000),time:(from:now-7d,mode:quick,to:now)">Kibana ProbeName records</a>&amp;_a=(columns:!(_source),index:%27gracc.osg.raw-*%27,interval:auto,query:(query_string:(analyze_wildcard:!f,query:%27ProbeName:%22slurm:grid1.oscer.ou.edu%22%27)),sort:!(EndTime,desc)))</li>
+</ul>
+</li>
+<li><a href="https://gracc.opensciencegrid.org/dashboard/db/osg-connect-summary-uchicago-ci?from=now-30d&amp;to=now&amp;orgId=1">OSG Connect Summary - UChicago</a></li>
+<li><a href="https://gracc.opensciencegrid.org/dashboard/db/site-transfer-summary?orgId=1&amp;from=1454284800000&amp;to=1485907200000&amp;var-interval=$__auto_interval&amp;var-site=All">Site Transfer Summary</a></li>
+</ul>
+<h2 id="issues">Issues</h2>
+<p>Selection of issues being investigated and actions taken in order to resolve them.</p>
+<h3 id="logstash">Logstash</h3>
+<p><strong>Symptom</strong>: 
+<em> high usage of gracc archiver memory (e.g. ~12GB)
+</em> logstash seems to be backed up and not responding
+* RabbitMQ has high volume of queued messages (e.g. ~100k)</p>
+<p><strong>Action</strong>: 
+<em> <code>systemctl restart elasticsearch.service</code>
+</em> added to <a href="https://hcc-mon.unl.edu/red/check_mk/index.py?start_url=%2Fred%2Fcheck_mk%2Fview.py%3Fview_name%3Dhost%26host%3Dgracc.opensciencegrid.org">check_mk</a>systemd monitoring for elasticsearch and elasticsearch-ro<br />
+* for continuous high rate disconnections in RabbitMQ contact <a href="mailto:mvkrenz@iu.edu">Marina Krenz</a></p>
               
             </div>
           </div>
@@ -230,10 +197,8 @@ LIGO in January 2017, and the total wall time they used. </p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../dev-docs/agent-arch/" class="btn btn-neutral float-right" title="Agent Architecture">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-      
-        <a href="../grafana/" class="btn btn-neutral" title="Custom Grafana"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../services/" class="btn btn-neutral" title="Operations"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -263,10 +228,8 @@ LIGO in January 2017, and the total wall time they used. </p>
           <a href="https://github.com/opensciencegrid/gracc" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../grafana/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../services/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
-      
-        <span style="margin-left: 15px"><a href="../../dev-docs/agent-arch/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
