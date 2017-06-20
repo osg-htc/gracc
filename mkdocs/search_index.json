@@ -419,6 +419,111 @@
             "location": "/ops/troubleshoot/#logstash", 
             "text": "Symptom :   high usage of gracc archiver memory (e.g. ~12GB)  logstash seems to be backed up and not responding\n* RabbitMQ has high volume of queued messages (e.g. ~100k)  Action :    systemctl restart elasticsearch.service   added to  check_mk systemd monitoring for elasticsearch and elasticsearch-ro \n* for continuous high rate disconnections in RabbitMQ contact  Marina Krenz", 
             "title": "Logstash"
+        }, 
+        {
+            "location": "/content/corrections/", 
+            "text": "Corrections\n\n\nGRACC corrections are maintained in an Elasticsearch index (\ngracc.corrections-0\n as of this writing).\nThese are used by \ngracc-request\n during summarization to correct/normalize VO and Project names.\n\n\nThe \ngracc-correct\n tool \nprovides a simple interface to manage name corrections. It is a single Python script that requires \nthe \nelasticseach\n package (\npip install elasticsearch\n).\n\n\nCurrently GRACC does not expose a read-write interface to Elasticsearch, so the script must be run \nfrom a node within the GRACC cluster (typically the head/client node).\n\n\nNote that it might take a minute for any changes to be reflected in queries to Elasticsearch.\n\n\nUsage\n\n\ngracc-correct [-h] [--url URL] [--index INDEX]\n                                 {project,vo} {list,add,update,delete} ...\n\npositional arguments:\n  {project,vo}          Correction type\n  {list,add,update,delete}\n    list                print existing corrections\n    add                 create new correction\n    update              update existing correction\n    delete              delete existing correction(s)\n\noptional arguments:\n  -h, --help            show this help message and exit\n  --url URL             Elasticsearch URL\n  --index INDEX         Index containing corrections\n\n\n\n\nlist command\n\n\nThe \nlist\n command will fetch and print the corrections in JSON format. You can limit the number\nof results with the \n--size\n option (default 1000), or filter the results by providing a JSON document\nwith fields to match, or an arbitrary Elasticsearch query.\n\n\nExtra options:\n\n\n  --size SIZE    Max number of documents to list.\n  --query QUERY  Search query to limit results.\n  --doc DOC      Optional JSON document with correction source to match\n\n\n\n\nadd command\n\n\nThe \nadd\n command with create a new correction. You can provide a JSON document, or \n\ngracc-correct\n will prompt you for the fields. If a correction already exists with the\ngiven keys, you'll be given the option to update the correction.\n\n\nExtra options:\n\n\n  --doc DOC      Optional JSON document with correction source to match\n\n\n\n\nupdate command\n\n\nThe \nupdate\n command will update an existing correction. You can provide a JSON document, or \n\ngracc-correct\n will prompt you for the fields. If a correction doesn't already exist with\nthe given keys, you'll be given the option to create a new correction.\n\n\nExtra options:\n\n\n  --doc DOC      Optional JSON document with correction source to match\n\n\n\n\ndelete command\n\n\nThe \ndelete\n command will delete an existing correction. You can provide a JSON document, a \ncorrection ID, or \ngracc-correct\n will prompt you for the fields. It will display the matching \ncorrection, and prompt for confirmation. This will be repeated if multiple documents match.\n\n\nExtra options:\n\n\n  --doc DOC   Optional JSON document with correction source to delete.\n  --id ID     Document id to delete.\n\n\n\n\nExamples\n\n\nList VO corrections\n\n\n$ gracc-correct vo list --size 5\n18 {\nReportableVOName\n: \nnanohub\n, \nVOName\n: \n/nanohub/Role=NULL/Capability=NULL\n, \nCorrectedVOName\n: \nnanohub\n}\n19 {\nReportableVOName\n: \nops\n, \nVOName\n: \n/ops/Role=lcgadmin/Capability=NULL\n, \nCorrectedVOName\n: \nops\n}\n20 {\nReportableVOName\n: \nosg\n, \nVOName\n: \n/osg/Role=NULL/Capability=NULL\n, \nCorrectedVOName\n: \nosg\n}\n21 {\nReportableVOName\n: \nosgedu\n, \nVOName\n: \n/osgedu/Role=NULL/Capability=NULL\n, \nCorrectedVOName\n: \nosgedu\n}\n22 {\nReportableVOName\n: \nstar\n, \nVOName\n: \n/star/Role=NULL/Capability=NULL\n, \nCorrectedVOName\n: \nstar\n}\n\n\n\n\nList Project corrections with query\n\n\n$ gracc-correct project list --query osg\n7 {\nCorrectedProjectName\n: \nOSG-Staff\n, \nProjectName\n: \nOSG-Staff\n}\n24 {\nCorrectedProjectName\n: \nOSG-STAFF\n, \nProjectName\n: \nOSG-STAFF\n}\n200 {\nCorrectedProjectName\n: \nSWC-OSG-UC14\n, \nProjectName\n: \nSWC-OSG-UC14\n}\n209 {\nCorrectedProjectName\n: \nSWC-OSG-IU15\n, \nProjectName\n: \nSWC-OSG-IU15\n}\n104 {\nCorrectedProjectName\n: \nosg\n, \nProjectName\n: \nosg\n}\n448 {\nCorrectedProjectName\n: \nOSG Staff\n, \nProjectName\n: \nOSG Staff\n}\n51 {\nCorrectedProjectName\n: \nConnectTrain\n, \nProjectName\n: \nOSG-Connect-test\n}\n52 {\nCorrectedProjectName\n: \nConnectTrain\n, \nProjectName\n: \nOSG-Connect\n}\n43 {\nCorrectedProjectName\n: \nSNOplus\n, \nProjectName\n: \nOSG-PHY00101\n}\n\n\n\n\nList VO corrections matching document\n\n\n$ gracc-correct vo list --doc '{\nReportableVOName\n:\nosg\n}' --size 5\n20 {\nReportableVOName\n: \nosg\n, \nVOName\n: \n/osg/Role=NULL/Capability=NULL\n, \nCorrectedVOName\n: \nosg\n}\n495 {\nReportableVOName\n: \nosg\n, \nVOName\n: \n/osg/Role=pilot/Capability=NULL\n, \nCorrectedVOName\n: \nosg\n}\n920 {\nReportableVOName\n: \nosg\n, \nVOName\n: \n/osg/LocalGroup=external\n, \nCorrectedVOName\n: \nosg\n}\n1041 {\nReportableVOName\n: \nosg\n, \nVOName\n: \n/osg/LocalGroup=marksant\n, \nCorrectedVOName\n: \nosg\n}\n1042 {\nReportableVOName\n: \nosg\n, \nVOName\n: \n/osg/Snowmass/Role=snowmassadmin/Capability=NULL\n, \nCorrectedVOName\n: \nosg\n}\n\n\n\n\nAdd new VO correction interactively\n\n\n$ gracc-correct vo add\nField(s) to correct:\n    VOName: example\n    ReportableVOName: example\nCorrected VOName: osg\nCorrection created. id: AVyOq_xvTIq8btIx9sGM\n\n$ gracc-correct vo list --query '_id:AVyOq_xvTIq8btIx9sGM'\nAVyOq_xvTIq8btIx9sGM {\nVOName\n: \nexample\n, \nReportableVOName\n: \nexample\n, \nCorrectedVOName\n: \nosg\n}\n\n\n\n\nAdd new VO correction with doc\n\n\n$ gracc-correct vo add --doc '{\nVOName\n:\nexample2\n,\nReportableVOName\n:\nexample\n,\nCorrectedVOName\n:\nosg\n}'\nCorrection created. id: AVyOr3nYTIq8btIx9sGN\n\n$ gracc-correct vo list --query '_id:AVyOr3nYTIq8btIx9sGN'\nAVyOr3nYTIq8btIx9sGN {\nVOName\n: \nexample2\n, \nReportableVOName\n: \nexample\n, \nCorrectedVOName\n: \nosg\n}\n\n\n\n\nUpdate VO correction interactively\n\n\n$ gracc-correct vo update\nField(s) to correct:\n    VOName: example2\n    ReportableVOName: example\nCorrected VOName: fermilab\nCorrection AVyOr3nYTIq8btIx9sGN updated.\n\n$ gracc-correct vo list --query '_id:AVyOr3nYTIq8btIx9sGN'\nAVyOr3nYTIq8btIx9sGN {\nVOName\n: \nexample2\n, \nReportableVOName\n: \nexample\n, \nCorrectedVOName\n: \nfermilab\n}\n\n\n\n\nNote: it might take a minute for the update to be reflected in the query.\n\n\nDelete correction interactively\n\n\n$ gracc-correct vo delete\nField(s) to correct:\n    VOName: example\n    ReportableVOName: example\nCorrected VOName: osg\n{u'VOName': u'example', u'ReportableVOName': u'example', u'CorrectedVOName': u'osg'}\nDelete record? (Y/N) y\nCorrection AVyOq_xvTIq8btIx9sGM deleted.\n\n\n\n\nDelete correction with doc\n\n\n$ gracc-correct vo delete --doc '{\nVOName\n: \nexample2\n, \nReportableVOName\n: \nexample\n, \nCorrectedVOName\n: \nfermilab\n}'\n{u'VOName': u'example2', u'ReportableVOName': u'example', u'CorrectedVOName': u'fermilab'}\nDelete record? (Y/N) y\nCorrection AVyOr3nYTIq8btIx9sGN deleted.\n\n\n\n\nDelete correction with id\n\n\n$ gracc-correct vo delete --id AVyOwmxFTIq8btIx9sGP\n{u'VOName': u'example', u'ReportableVOName': u'example', u'CorrectedVOName': u'osg'}\nDelete record? (Y/N) y\nCorrection AVyOwmxFTIq8btIx9sGP deleted.", 
+            "title": "Corrections"
+        }, 
+        {
+            "location": "/content/corrections/#corrections", 
+            "text": "GRACC corrections are maintained in an Elasticsearch index ( gracc.corrections-0  as of this writing).\nThese are used by  gracc-request  during summarization to correct/normalize VO and Project names.  The  gracc-correct  tool \nprovides a simple interface to manage name corrections. It is a single Python script that requires \nthe  elasticseach  package ( pip install elasticsearch ).  Currently GRACC does not expose a read-write interface to Elasticsearch, so the script must be run \nfrom a node within the GRACC cluster (typically the head/client node).  Note that it might take a minute for any changes to be reflected in queries to Elasticsearch.", 
+            "title": "Corrections"
+        }, 
+        {
+            "location": "/content/corrections/#usage", 
+            "text": "gracc-correct [-h] [--url URL] [--index INDEX]\n                                 {project,vo} {list,add,update,delete} ...\n\npositional arguments:\n  {project,vo}          Correction type\n  {list,add,update,delete}\n    list                print existing corrections\n    add                 create new correction\n    update              update existing correction\n    delete              delete existing correction(s)\n\noptional arguments:\n  -h, --help            show this help message and exit\n  --url URL             Elasticsearch URL\n  --index INDEX         Index containing corrections", 
+            "title": "Usage"
+        }, 
+        {
+            "location": "/content/corrections/#list-command", 
+            "text": "The  list  command will fetch and print the corrections in JSON format. You can limit the number\nof results with the  --size  option (default 1000), or filter the results by providing a JSON document\nwith fields to match, or an arbitrary Elasticsearch query.", 
+            "title": "list command"
+        }, 
+        {
+            "location": "/content/corrections/#extra-options", 
+            "text": "--size SIZE    Max number of documents to list.\n  --query QUERY  Search query to limit results.\n  --doc DOC      Optional JSON document with correction source to match", 
+            "title": "Extra options:"
+        }, 
+        {
+            "location": "/content/corrections/#add-command", 
+            "text": "The  add  command with create a new correction. You can provide a JSON document, or  gracc-correct  will prompt you for the fields. If a correction already exists with the\ngiven keys, you'll be given the option to update the correction.", 
+            "title": "add command"
+        }, 
+        {
+            "location": "/content/corrections/#extra-options_1", 
+            "text": "--doc DOC      Optional JSON document with correction source to match", 
+            "title": "Extra options:"
+        }, 
+        {
+            "location": "/content/corrections/#update-command", 
+            "text": "The  update  command will update an existing correction. You can provide a JSON document, or  gracc-correct  will prompt you for the fields. If a correction doesn't already exist with\nthe given keys, you'll be given the option to create a new correction.", 
+            "title": "update command"
+        }, 
+        {
+            "location": "/content/corrections/#extra-options_2", 
+            "text": "--doc DOC      Optional JSON document with correction source to match", 
+            "title": "Extra options:"
+        }, 
+        {
+            "location": "/content/corrections/#delete-command", 
+            "text": "The  delete  command will delete an existing correction. You can provide a JSON document, a \ncorrection ID, or  gracc-correct  will prompt you for the fields. It will display the matching \ncorrection, and prompt for confirmation. This will be repeated if multiple documents match.", 
+            "title": "delete command"
+        }, 
+        {
+            "location": "/content/corrections/#extra-options_3", 
+            "text": "--doc DOC   Optional JSON document with correction source to delete.\n  --id ID     Document id to delete.", 
+            "title": "Extra options:"
+        }, 
+        {
+            "location": "/content/corrections/#examples", 
+            "text": "", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/content/corrections/#list-vo-corrections", 
+            "text": "$ gracc-correct vo list --size 5\n18 { ReportableVOName :  nanohub ,  VOName :  /nanohub/Role=NULL/Capability=NULL ,  CorrectedVOName :  nanohub }\n19 { ReportableVOName :  ops ,  VOName :  /ops/Role=lcgadmin/Capability=NULL ,  CorrectedVOName :  ops }\n20 { ReportableVOName :  osg ,  VOName :  /osg/Role=NULL/Capability=NULL ,  CorrectedVOName :  osg }\n21 { ReportableVOName :  osgedu ,  VOName :  /osgedu/Role=NULL/Capability=NULL ,  CorrectedVOName :  osgedu }\n22 { ReportableVOName :  star ,  VOName :  /star/Role=NULL/Capability=NULL ,  CorrectedVOName :  star }", 
+            "title": "List VO corrections"
+        }, 
+        {
+            "location": "/content/corrections/#list-project-corrections-with-query", 
+            "text": "$ gracc-correct project list --query osg\n7 { CorrectedProjectName :  OSG-Staff ,  ProjectName :  OSG-Staff }\n24 { CorrectedProjectName :  OSG-STAFF ,  ProjectName :  OSG-STAFF }\n200 { CorrectedProjectName :  SWC-OSG-UC14 ,  ProjectName :  SWC-OSG-UC14 }\n209 { CorrectedProjectName :  SWC-OSG-IU15 ,  ProjectName :  SWC-OSG-IU15 }\n104 { CorrectedProjectName :  osg ,  ProjectName :  osg }\n448 { CorrectedProjectName :  OSG Staff ,  ProjectName :  OSG Staff }\n51 { CorrectedProjectName :  ConnectTrain ,  ProjectName :  OSG-Connect-test }\n52 { CorrectedProjectName :  ConnectTrain ,  ProjectName :  OSG-Connect }\n43 { CorrectedProjectName :  SNOplus ,  ProjectName :  OSG-PHY00101 }", 
+            "title": "List Project corrections with query"
+        }, 
+        {
+            "location": "/content/corrections/#list-vo-corrections-matching-document", 
+            "text": "$ gracc-correct vo list --doc '{ ReportableVOName : osg }' --size 5\n20 { ReportableVOName :  osg ,  VOName :  /osg/Role=NULL/Capability=NULL ,  CorrectedVOName :  osg }\n495 { ReportableVOName :  osg ,  VOName :  /osg/Role=pilot/Capability=NULL ,  CorrectedVOName :  osg }\n920 { ReportableVOName :  osg ,  VOName :  /osg/LocalGroup=external ,  CorrectedVOName :  osg }\n1041 { ReportableVOName :  osg ,  VOName :  /osg/LocalGroup=marksant ,  CorrectedVOName :  osg }\n1042 { ReportableVOName :  osg ,  VOName :  /osg/Snowmass/Role=snowmassadmin/Capability=NULL ,  CorrectedVOName :  osg }", 
+            "title": "List VO corrections matching document"
+        }, 
+        {
+            "location": "/content/corrections/#add-new-vo-correction-interactively", 
+            "text": "$ gracc-correct vo add\nField(s) to correct:\n    VOName: example\n    ReportableVOName: example\nCorrected VOName: osg\nCorrection created. id: AVyOq_xvTIq8btIx9sGM\n\n$ gracc-correct vo list --query '_id:AVyOq_xvTIq8btIx9sGM'\nAVyOq_xvTIq8btIx9sGM { VOName :  example ,  ReportableVOName :  example ,  CorrectedVOName :  osg }", 
+            "title": "Add new VO correction interactively"
+        }, 
+        {
+            "location": "/content/corrections/#add-new-vo-correction-with-doc", 
+            "text": "$ gracc-correct vo add --doc '{ VOName : example2 , ReportableVOName : example , CorrectedVOName : osg }'\nCorrection created. id: AVyOr3nYTIq8btIx9sGN\n\n$ gracc-correct vo list --query '_id:AVyOr3nYTIq8btIx9sGN'\nAVyOr3nYTIq8btIx9sGN { VOName :  example2 ,  ReportableVOName :  example ,  CorrectedVOName :  osg }", 
+            "title": "Add new VO correction with doc"
+        }, 
+        {
+            "location": "/content/corrections/#update-vo-correction-interactively", 
+            "text": "$ gracc-correct vo update\nField(s) to correct:\n    VOName: example2\n    ReportableVOName: example\nCorrected VOName: fermilab\nCorrection AVyOr3nYTIq8btIx9sGN updated.\n\n$ gracc-correct vo list --query '_id:AVyOr3nYTIq8btIx9sGN'\nAVyOr3nYTIq8btIx9sGN { VOName :  example2 ,  ReportableVOName :  example ,  CorrectedVOName :  fermilab }  Note: it might take a minute for the update to be reflected in the query.", 
+            "title": "Update VO correction interactively"
+        }, 
+        {
+            "location": "/content/corrections/#delete-correction-interactively", 
+            "text": "$ gracc-correct vo delete\nField(s) to correct:\n    VOName: example\n    ReportableVOName: example\nCorrected VOName: osg\n{u'VOName': u'example', u'ReportableVOName': u'example', u'CorrectedVOName': u'osg'}\nDelete record? (Y/N) y\nCorrection AVyOq_xvTIq8btIx9sGM deleted.", 
+            "title": "Delete correction interactively"
+        }, 
+        {
+            "location": "/content/corrections/#delete-correction-with-doc", 
+            "text": "$ gracc-correct vo delete --doc '{ VOName :  example2 ,  ReportableVOName :  example ,  CorrectedVOName :  fermilab }'\n{u'VOName': u'example2', u'ReportableVOName': u'example', u'CorrectedVOName': u'fermilab'}\nDelete record? (Y/N) y\nCorrection AVyOr3nYTIq8btIx9sGN deleted.", 
+            "title": "Delete correction with doc"
+        }, 
+        {
+            "location": "/content/corrections/#delete-correction-with-id", 
+            "text": "$ gracc-correct vo delete --id AVyOwmxFTIq8btIx9sGP\n{u'VOName': u'example', u'ReportableVOName': u'example', u'CorrectedVOName': u'osg'}\nDelete record? (Y/N) y\nCorrection AVyOwmxFTIq8btIx9sGP deleted.", 
+            "title": "Delete correction with id"
         }
     ]
 }

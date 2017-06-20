@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Corrections - GRACC Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <link href="../../css/extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Corrections";
+    var mkdocs_page_input_path = "content/corrections.md";
+    var mkdocs_page_url = "/content/corrections/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> GRACC Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Introduction</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">User Guide</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../user/standard/">Standard Interfaces</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../user/grafana/">Custom Grafana</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../user/direct/">Direct Queries</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development Docs</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../dev-docs/agent-arch/">Agent Architecture</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev-docs/message-queues/">Message Queues</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev-docs/raw-records/">Raw Records</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Operator Docs</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../dev-docs/install-grace-db/">Installation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev-docs/backups/">Backup Documentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../ops/services/">Operations</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../ops/troubleshoot/">Troubleshooting</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Content Management</span>
+    <ul class="subnav">
+                <li class=" current">
+                    
+    <a class="current" href="./">Corrections</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#corrections">Corrections</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#usage">Usage</a></li>
+        
+            <li><a class="toctree-l4" href="#examples">Examples</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">GRACC Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Content Management &raquo;</li>
+        
+      
+    
+    <li>Corrections</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/opensciencegrid/gracc/edit/master/docs/content/corrections.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="corrections">Corrections</h1>
+<p>GRACC corrections are maintained in an Elasticsearch index (<code>gracc.corrections-0</code> as of this writing).
+These are used by <code>gracc-request</code> during summarization to correct/normalize VO and Project names.</p>
+<p>The <a href="https://github.com/opensciencegrid/gracc-tools/tree/master/gracc-correct">gracc-correct</a> tool 
+provides a simple interface to manage name corrections. It is a single Python script that requires 
+the <code>elasticseach</code> package (<code>pip install elasticsearch</code>).</p>
+<p>Currently GRACC does not expose a read-write interface to Elasticsearch, so the script must be run 
+from a node within the GRACC cluster (typically the head/client node).</p>
+<p><em>Note that it might take a minute for any changes to be reflected in queries to Elasticsearch.</em></p>
+<h2 id="usage">Usage</h2>
+<pre><code>gracc-correct [-h] [--url URL] [--index INDEX]
+                                 {project,vo} {list,add,update,delete} ...
+
+positional arguments:
+  {project,vo}          Correction type
+  {list,add,update,delete}
+    list                print existing corrections
+    add                 create new correction
+    update              update existing correction
+    delete              delete existing correction(s)
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --url URL             Elasticsearch URL
+  --index INDEX         Index containing corrections
+</code></pre>
+
+<h3 id="list-command">list command</h3>
+<p>The <code>list</code> command will fetch and print the corrections in JSON format. You can limit the number
+of results with the <code>--size</code> option (default 1000), or filter the results by providing a JSON document
+with fields to match, or an arbitrary Elasticsearch query.</p>
+<h4 id="extra-options">Extra options:</h4>
+<pre><code>  --size SIZE    Max number of documents to list.
+  --query QUERY  Search query to limit results.
+  --doc DOC      Optional JSON document with correction source to match
+</code></pre>
+
+<h3 id="add-command">add command</h3>
+<p>The <code>add</code> command with create a new correction. You can provide a JSON document, or 
+<code>gracc-correct</code> will prompt you for the fields. If a correction already exists with the
+given keys, you'll be given the option to update the correction.</p>
+<h4 id="extra-options_1">Extra options:</h4>
+<pre><code>  --doc DOC      Optional JSON document with correction source to match
+</code></pre>
+
+<h3 id="update-command">update command</h3>
+<p>The <code>update</code> command will update an existing correction. You can provide a JSON document, or 
+<code>gracc-correct</code> will prompt you for the fields. If a correction doesn't already exist with
+the given keys, you'll be given the option to create a new correction.</p>
+<h4 id="extra-options_2">Extra options:</h4>
+<pre><code>  --doc DOC      Optional JSON document with correction source to match
+</code></pre>
+
+<h3 id="delete-command">delete command</h3>
+<p>The <code>delete</code> command will delete an existing correction. You can provide a JSON document, a 
+correction ID, or <code>gracc-correct</code> will prompt you for the fields. It will display the matching 
+correction, and prompt for confirmation. This will be repeated if multiple documents match.</p>
+<h4 id="extra-options_3">Extra options:</h4>
+<pre><code>  --doc DOC   Optional JSON document with correction source to delete.
+  --id ID     Document id to delete.
+</code></pre>
+
+<h2 id="examples">Examples</h2>
+<h3 id="list-vo-corrections">List VO corrections</h3>
+<pre><code>$ gracc-correct vo list --size 5
+18 {&quot;ReportableVOName&quot;: &quot;nanohub&quot;, &quot;VOName&quot;: &quot;/nanohub/Role=NULL/Capability=NULL&quot;, &quot;CorrectedVOName&quot;: &quot;nanohub&quot;}
+19 {&quot;ReportableVOName&quot;: &quot;ops&quot;, &quot;VOName&quot;: &quot;/ops/Role=lcgadmin/Capability=NULL&quot;, &quot;CorrectedVOName&quot;: &quot;ops&quot;}
+20 {&quot;ReportableVOName&quot;: &quot;osg&quot;, &quot;VOName&quot;: &quot;/osg/Role=NULL/Capability=NULL&quot;, &quot;CorrectedVOName&quot;: &quot;osg&quot;}
+21 {&quot;ReportableVOName&quot;: &quot;osgedu&quot;, &quot;VOName&quot;: &quot;/osgedu/Role=NULL/Capability=NULL&quot;, &quot;CorrectedVOName&quot;: &quot;osgedu&quot;}
+22 {&quot;ReportableVOName&quot;: &quot;star&quot;, &quot;VOName&quot;: &quot;/star/Role=NULL/Capability=NULL&quot;, &quot;CorrectedVOName&quot;: &quot;star&quot;}
+</code></pre>
+
+<h3 id="list-project-corrections-with-query">List Project corrections with query</h3>
+<pre><code>$ gracc-correct project list --query osg
+7 {&quot;CorrectedProjectName&quot;: &quot;OSG-Staff&quot;, &quot;ProjectName&quot;: &quot;OSG-Staff&quot;}
+24 {&quot;CorrectedProjectName&quot;: &quot;OSG-STAFF&quot;, &quot;ProjectName&quot;: &quot;OSG-STAFF&quot;}
+200 {&quot;CorrectedProjectName&quot;: &quot;SWC-OSG-UC14&quot;, &quot;ProjectName&quot;: &quot;SWC-OSG-UC14&quot;}
+209 {&quot;CorrectedProjectName&quot;: &quot;SWC-OSG-IU15&quot;, &quot;ProjectName&quot;: &quot;SWC-OSG-IU15&quot;}
+104 {&quot;CorrectedProjectName&quot;: &quot;osg&quot;, &quot;ProjectName&quot;: &quot;osg&quot;}
+448 {&quot;CorrectedProjectName&quot;: &quot;OSG Staff&quot;, &quot;ProjectName&quot;: &quot;OSG Staff&quot;}
+51 {&quot;CorrectedProjectName&quot;: &quot;ConnectTrain&quot;, &quot;ProjectName&quot;: &quot;OSG-Connect-test&quot;}
+52 {&quot;CorrectedProjectName&quot;: &quot;ConnectTrain&quot;, &quot;ProjectName&quot;: &quot;OSG-Connect&quot;}
+43 {&quot;CorrectedProjectName&quot;: &quot;SNOplus&quot;, &quot;ProjectName&quot;: &quot;OSG-PHY00101&quot;}
+</code></pre>
+
+<h3 id="list-vo-corrections-matching-document">List VO corrections matching document</h3>
+<pre><code>$ gracc-correct vo list --doc '{&quot;ReportableVOName&quot;:&quot;osg&quot;}' --size 5
+20 {&quot;ReportableVOName&quot;: &quot;osg&quot;, &quot;VOName&quot;: &quot;/osg/Role=NULL/Capability=NULL&quot;, &quot;CorrectedVOName&quot;: &quot;osg&quot;}
+495 {&quot;ReportableVOName&quot;: &quot;osg&quot;, &quot;VOName&quot;: &quot;/osg/Role=pilot/Capability=NULL&quot;, &quot;CorrectedVOName&quot;: &quot;osg&quot;}
+920 {&quot;ReportableVOName&quot;: &quot;osg&quot;, &quot;VOName&quot;: &quot;/osg/LocalGroup=external&quot;, &quot;CorrectedVOName&quot;: &quot;osg&quot;}
+1041 {&quot;ReportableVOName&quot;: &quot;osg&quot;, &quot;VOName&quot;: &quot;/osg/LocalGroup=marksant&quot;, &quot;CorrectedVOName&quot;: &quot;osg&quot;}
+1042 {&quot;ReportableVOName&quot;: &quot;osg&quot;, &quot;VOName&quot;: &quot;/osg/Snowmass/Role=snowmassadmin/Capability=NULL&quot;, &quot;CorrectedVOName&quot;: &quot;osg&quot;}
+</code></pre>
+
+<h3 id="add-new-vo-correction-interactively">Add new VO correction interactively</h3>
+<pre><code>$ gracc-correct vo add
+Field(s) to correct:
+    VOName: example
+    ReportableVOName: example
+Corrected VOName: osg
+Correction created. id: AVyOq_xvTIq8btIx9sGM
+
+$ gracc-correct vo list --query '_id:AVyOq_xvTIq8btIx9sGM'
+AVyOq_xvTIq8btIx9sGM {&quot;VOName&quot;: &quot;example&quot;, &quot;ReportableVOName&quot;: &quot;example&quot;, &quot;CorrectedVOName&quot;: &quot;osg&quot;}
+</code></pre>
+
+<h3 id="add-new-vo-correction-with-doc">Add new VO correction with doc</h3>
+<pre><code>$ gracc-correct vo add --doc '{&quot;VOName&quot;:&quot;example2&quot;,&quot;ReportableVOName&quot;:&quot;example&quot;,&quot;CorrectedVOName&quot;:&quot;osg&quot;}'
+Correction created. id: AVyOr3nYTIq8btIx9sGN
+
+$ gracc-correct vo list --query '_id:AVyOr3nYTIq8btIx9sGN'
+AVyOr3nYTIq8btIx9sGN {&quot;VOName&quot;: &quot;example2&quot;, &quot;ReportableVOName&quot;: &quot;example&quot;, &quot;CorrectedVOName&quot;: &quot;osg&quot;}
+</code></pre>
+
+<h3 id="update-vo-correction-interactively">Update VO correction interactively</h3>
+<pre><code>$ gracc-correct vo update
+Field(s) to correct:
+    VOName: example2
+    ReportableVOName: example
+Corrected VOName: fermilab
+Correction AVyOr3nYTIq8btIx9sGN updated.
+
+$ gracc-correct vo list --query '_id:AVyOr3nYTIq8btIx9sGN'
+AVyOr3nYTIq8btIx9sGN {&quot;VOName&quot;: &quot;example2&quot;, &quot;ReportableVOName&quot;: &quot;example&quot;, &quot;CorrectedVOName&quot;: &quot;fermilab&quot;}
+</code></pre>
+
+<p>Note: it might take a minute for the update to be reflected in the query.</p>
+<h3 id="delete-correction-interactively">Delete correction interactively</h3>
+<pre><code>$ gracc-correct vo delete
+Field(s) to correct:
+    VOName: example
+    ReportableVOName: example
+Corrected VOName: osg
+{u'VOName': u'example', u'ReportableVOName': u'example', u'CorrectedVOName': u'osg'}
+Delete record? (Y/N) y
+Correction AVyOq_xvTIq8btIx9sGM deleted.
+</code></pre>
+
+<h3 id="delete-correction-with-doc">Delete correction with doc</h3>
+<pre><code>$ gracc-correct vo delete --doc '{&quot;VOName&quot;: &quot;example2&quot;, &quot;ReportableVOName&quot;: &quot;example&quot;, &quot;CorrectedVOName&quot;: &quot;fermilab&quot;}'
+{u'VOName': u'example2', u'ReportableVOName': u'example', u'CorrectedVOName': u'fermilab'}
+Delete record? (Y/N) y
+Correction AVyOr3nYTIq8btIx9sGN deleted.
+</code></pre>
+
+<h3 id="delete-correction-with-id">Delete correction with id</h3>
+<pre><code>$ gracc-correct vo delete --id AVyOwmxFTIq8btIx9sGP
+{u'VOName': u'example', u'ReportableVOName': u'example', u'CorrectedVOName': u'osg'}
+Delete record? (Y/N) y
+Correction AVyOwmxFTIq8btIx9sGP deleted.
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../../ops/troubleshoot/" class="btn btn-neutral" title="Troubleshooting"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Open Science Grid</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/opensciencegrid/gracc" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../../ops/troubleshoot/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>
