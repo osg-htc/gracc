@@ -164,7 +164,7 @@ To run periodically:
     $ systemctl status gracc-apel.timer
 ```
 
-    * To check if `gracc-timer.timer` runs:
+* To check if `gracc-apel.timer` runs:
 ```
     $ systemctl list-timers *apel*
     NEXT                         LEFT       LAST                         PASSED    UNIT             ACTIVATES
