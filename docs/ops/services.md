@@ -111,6 +111,42 @@ summarize periods.
   * Every 24 hours, resummarize the last 365 days: `graccsumperiodicyearly.service` and `graccsumperiodicyearly.timer`
 * Config in `/etc/graccsum/config.d/gracc-summary.toml`
 
+
+#### GRACC Reporting
+* Images on [dockerhub](https://hub.docker.com/r/shreyb/gracc-reporting/) 
+    * `docker pull shreyb/gracc-reporting`
+* Currently running on cron jobs that run wrapper shell scripts that in turn call docker-compose.  Thus, checking the status of report runs can be accomplished by using `docker ps -a`.
+* Dockerfiles and docker-compose files can be pulled from [Github](https://github.com/shreyb/gracc-reporting-docker) to replicate the structure of the OSG deployment of the docker containers.  Note that this does *not* contain report config files.  See [configuration details](#configuring-gracc-reporting).
+* Reports run from OSG (`osg-reports`):
+    * OSG Flocking Report (osgflockingreport)
+    * OSG Project Usage Report (osgreport)
+    * OSG Missing Projects from Records report (osgmissingprojects)
+    * OSG Usage Per Site Report (osgpersitereport)
+    * Top [N] Providers of Opportunistic Hours on the OSG (News Report) (osgtopoppusagereport)
+    * Gratia Probes that haven't reported in the past two days (osgprobereport)
+
+##### Configuring GRACC Reporting
+* GRACC Reporting config file at `/opt/gracc-reporting/config/osg.toml`.  Three main sections:
+    * General:  General parameters such as admin emails, elasticsearch host, etc.
+    * Report-specific:  Each top-level entry corresponds to a particular report (or a particular report)
+    * Databases:  For any external database lookups, such as XSEDE.  Not necessary unless you're running a report that uses external databases
+
+* The source code repository on [GitHub](https://github.com/opensciencegrid/gracc-reporting/blob/master/src/graccreports/config/osg.toml) has sample config files that can be modified, installed wherever is desired, and then specified in the docker-compose files.
+
+* Docker configuration is via docker-compose files at `/opt/gracc-reporting/<report-subpackage>/<report-name>/docker-compose.yml`.  Here's an example (OSG Flocking Report).  Note that we use environmental variables liberally, but that's not a requirement:
+```
+version: "2"
+services:
+        osgflockingreport:
+                image: "shreyb/gracc-reporting:osgflocking-report_${VERSIONRELEASE}"
+                volumes:
+                        - ${LOCALLOGDIR}:/tmp/log
+                        - ${CONFIGDIR}:/tmp/gracc-config
+                        - /etc/localtime:/etc/localtime
+                network_mode: "host"
+command: ["-s", "${starttime}", "-e", "${endtime}", "-c", "/tmp/gracc-config/osg.toml", "-L", "/tmp/log/osgflockingreport.log"]
+```
+
 #### APEL reporting
 * Source at [OSG docker](https://hub.docker.com/r/opensciencegrid/gracc-apel/) 
     * `docker {pull, run} opensciencegrid/gracc-apel`
