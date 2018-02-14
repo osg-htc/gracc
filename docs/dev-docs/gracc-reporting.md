@@ -67,27 +67,27 @@ Similar to config files, the reports automatically try to write logs to the foll
 * `$HOME/gracc-reporting`
 * `/tmp/gracc-reporting`
 
-This will also be changed, so that the following order is observed:  override, environment variable, config file, $HOME/gracc-reporting.  In practice, the others are good, but unnecessary.
+This will also be changed, so that the following order is observed:  override, environment variable, config file, `$HOME/gracc-reporting`.  In practice, the others are good, but unnecessary.
 
 ### Override flags:
--c: Config file
--T: HTML Template
--L: logfile
+* -c: Config file
+* -T: HTML Template
+* -L: logfile
 
 
 ## Installation
 ### Setuptools
 * Clone repository: `git clone https://github.com/opensciencegrid/gracc-reporting`
 * `pip install -r requirements.txt`
-* python setup.py install
+* `python setup.py install`
 
 After this is complete, remember to change the config files within the package (or wherever you copy them) as needed (email recipients, etc.)
 
 ### RPM (future)
 * RPM will be available online 
 * Currently use this inside docker image
-* Config files, HTML templates, etc. installed at /etc/gracc-reporting/
-* If you’re running RHEL7, CentOS7, SL7, etc., bug in package python-urllib3 in primary repo (RPM installation) - breaks python-elasticsearch (https://bugzilla.redhat.com/show_bug.cgi?id=1450213)
+* Config files, HTML templates, etc. installed at `/etc/gracc-reporting/`
+* If you’re running RHEL7, CentOS7, SL7, etc., [bug](https://bugzilla.redhat.com/show_bug.cgi?id=1450213) in package python-urllib3 in primary repo (RPM installation) - breaks python-elasticsearch 
 * In my docker images, I uninstall python-urllib3, and pip install urllib3 to get around that (PyPI version is fine)
 
 
@@ -97,20 +97,20 @@ After this is complete, remember to change the config files within the package (
 * ReportUtils.py:  The big one
     * Reporter class:
         * Establish Elasticsearch client
-        * Set correct ES index pattern (rather than just using gracc.osg.raw-*, unless we really want to query all raw records)
+        * Set correct ES index pattern (rather than just using `gracc.osg.raw-*`, unless we really want to query all raw records)
         * Run query with or without aggregations
         * Send simpler reports
         * Set up logging, get email info from config files, parse options to reports
     * Also has functions to find config, HTML template files, as well as handle errors
-* IndexPattern.py:  Figures out index pattern given a date range and flags.  Assumes gracc.osg.summary if there's no config file index_pattern flag for a given report.
+* IndexPattern.py:  Figures out index pattern given a date range and flags.  Assumes `gracc.osg.summary` if there's no config file `index_pattern` flag for a given report.
 * TextUtils.py:  Used by ReportUtils to generate reports for simpler HTML templates
-* TimeUtils.py:  Datetime validation and time zone handling (built heavily off of datetime and dateutil, creates timestamps for grafana
+* TimeUtils.py:  Datetime validation and time zone handling (built heavily off of datetime and dateutil, creates timestamps for grafana)
 
 ### Building a new release
 * Implemented methods in most reports:
 * Edit setup.py if needed (if you have a new report, add executable, version update, etc.)
-* python setup.py sdist
+* `python setup.py sdist`
 * Python package:
     * Copy out the tarball in dist/ wherever you want to deploy, or push it to github and pull from there
 * RPM:
-    * Spec file is in config/ (symlink to src/graccreports/config/)
+    * Spec file is in `config/` (symlink to `src/graccreports/config/`)
