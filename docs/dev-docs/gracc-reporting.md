@@ -55,7 +55,7 @@ Configuration files are simple toml files that are read through the toml python 
 #### Future deprecated behavior:
 Currently, the common reporting libraries (in this case, ReportUtils.py) automatically look for the config file in the following places (in order):
 * Override (see [below](#override-flags))
-* /etc/gracc-reporting/{config|html_templates}
+* `/etc/gracc-reporting/{config|html_templates}`
 * Within package using pkg_resources
 
 The plan is to change this in the future to look for the config file in an override, an environment variable, and then within the package.  `/etc/gracc-reporting` might be kept if the deployment model is changed.
@@ -63,9 +63,9 @@ The plan is to change this in the future to look for the config file in an overr
 Similar to config files, the reports automatically try to write logs to the following locations:
 * Override
 * Specified in config file
-* /var/log/gracc-reporting
-* $HOME/gracc-reporting
-* /tmp/gracc-reporting
+* `/var/log/gracc-reporting`
+* `$HOME/gracc-reporting`
+* `/tmp/gracc-reporting`
 
 This will also be changed, so that the following order is observed:  override, environment variable, config file, $HOME/gracc-reporting.  In practice, the others are good, but unnecessary.
 
