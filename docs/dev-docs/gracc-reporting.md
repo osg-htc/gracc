@@ -50,7 +50,7 @@ The source code for gracc-reporting is on the [OSG's Github Page](https://github
         * -v: verbose
 
 ### Configuration files
-Configuration files are simple toml files that are read through the toml python module.  There is one for each subpackage.  In keeping with setuptools' philosophy, the config files and html templates that are shipped with the source code are kept within the package at `src/graccreports/{config|html_templates}`.
+Configuration files are simple toml files that are read through the toml python module.  There is one for each subpackage.  In keeping with setuptools' philosophy, the config files and html templates that are shipped with the source code are kept within the package at `src/graccreports/{config|html_templates}`.  In each config file, the report sections correspond to a `ReportUtils.Reporter.report_type`.
 
 #### Future deprecated behavior:
 Currently, the common reporting libraries (in this case, ReportUtils.py) automatically look for the config file in the following places (in order):
