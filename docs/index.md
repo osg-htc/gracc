@@ -20,4 +20,4 @@ Repositories of interest:
 * [GRACC Summary Agent](https://github.com/opensciencegrid/gracc-summary). Agents that request summary records from the Request Agent and forward the records back to the Logstash agent for storage in ElasticSearch
 * [GRACC Archiver](https://github.com/opensciencegrid/gracc-archive).  Agents that listen on the RabbitMQ exchange for raw records and store them to disk in a gzip file.
 * [GRACC Backup Scripts](https://github.com/opensciencegrid/gracc-backup). A service that runs periodically on the same host as the Archiver which backs up the completed gzip files to external Tape.  See [Backup Docs](dev-docs/backups.md) for more details.
-
+* [GRACC Reports](https://github.com/opensciencegrid/gracc-reporting).  A collection of reports that run periodically that query GRACC and present aggregated data to stakeholders.
