@@ -13,7 +13,7 @@ command-line via cURL. This query will calculate the number of payload jobs run 
 LIGO in January 2017, and the total wall time they used. 
 
 ```
-curl 'https://gracc.opensciencegrid.org/q/gracc.osg.summary/_search?pretty' --data-binary '
+curl --header 'Content-Type: application/json' 'https://gracc.opensciencegrid.org/q/gracc.osg.summary/_search?pretty' --data-binary '
 {
     "query": {
         "query_string": {
