@@ -14,7 +14,7 @@
     
     
       
-        <title>Message Queues - GRACC Documentation</title>
+        <title>GRACC Reporting - GRACC Documentation</title>
       
     
     
@@ -61,7 +61,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#message-queues" class="md-skip">
+        <a href="#gracc-reporting" class="md-skip">
           Skip to content
         </a>
       
@@ -91,7 +91,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Message Queues
+              GRACC Reporting
             
           </span>
         </div>
@@ -276,14 +276,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
       <label class="md-nav__link" for="__nav_3">
         Development Docs
@@ -311,63 +309,11 @@
             
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Message Queues
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../message-queues/" class="md-nav__link">
         Message Queues
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#raw-records" class="md-nav__link">
-    Raw Records
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#summary-records" class="md-nav__link">
-    Summary Records
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#replay-requests" class="md-nav__link">
-    Replay Requests
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -535,23 +481,130 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#raw-records" class="md-nav__link">
-    Raw Records
+  <a href="#reports-in-gracc-reporting" class="md-nav__link">
+    Reports in gracc-reporting
   </a>
+  
+    <nav class="md-nav" aria-label="Reports in gracc-reporting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#source" class="md-nav__link">
+    Source
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#summary-records" class="md-nav__link">
-    Summary Records
+  <a href="#gracc-reporting-structure" class="md-nav__link">
+    gracc-reporting structure
   </a>
+  
+    <nav class="md-nav" aria-label="gracc-reporting structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-report-structure" class="md-nav__link">
+    General Report Structure
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-reports-in-development" class="md-nav__link">
+    Running Reports in Development
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-files" class="md-nav__link">
+    Configuration files
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#future-deprecated-behavior" class="md-nav__link">
+    Future deprecated behavior:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#override-flags" class="md-nav__link">
+    Override flags:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#replay-requests" class="md-nav__link">
-    Replay Requests
+  <a href="#installation" class="md-nav__link">
+    Installation
   </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setuptools" class="md-nav__link">
+    Setuptools
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rpm-future" class="md-nav__link">
+    RPM (future)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#addendum-more-detailed-developer-notes" class="md-nav__link">
+    Addendum:  More detailed developer notes
+  </a>
+  
+    <nav class="md-nav" aria-label="Addendum:  More detailed developer notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shared-libraries" class="md-nav__link">
+    Shared Libraries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-a-new-release" class="md-nav__link">
+    Building a new release
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -567,98 +620,138 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/osg-htc/gracc/edit/master/docs/dev-docs/message-queues.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/osg-htc/gracc/edit/master/docs/dev-docs/gracc-reporting.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="message-queues">Message Queues</h1>
-<p>Message queues used in GRACC</p>
-<hr />
-<p>In AMQP, there is a difference between a <em>queue</em> and an <em>exchange</em>.  Messages delivered on a <em>queue</em> are read by a single subscriber; messages delivered on an <em>exchange</em> will be delivered to all subscribers (implying they may be buffered for some time at the broker if a given client goes missing).</p>
-<p>We would like collectors to serve multiple databases (hence the use of an <em>exchange</em>) while queues are used for messages sent to a database agent.</p>
-<p>Well known message queues and exchanges used:</p>
+                <h1 id="gracc-reporting">GRACC Reporting</h1>
+<p>gracc-reporting is a python package (python 2.7+) that consists of a standard set of reporting libraries, and individual report executables that query GRACC, aggregate the data, and send reports to various stakeholders.</p>
+<p>A lot of this information has been pulled from (and updated since then) <a href="https://docs.google.com/presentation/d/1FPfBx8lmHGYwaM0RTrlZ1ANc2Osx1G_Utcs0o3xKwOI/edit?usp=sharing">this presentation</a>.</p>
+<h2 id="reports-in-gracc-reporting">Reports in gracc-reporting</h2>
+<p>There are currently three subpackages in gracc-reporting.  In the future, we plan to split these out from the main set of reporting libraries.  These packages are:</p>
 <ul>
-<li><code>/gracc.&lt;collector&gt;.raw</code> - An exchange which listens to raw records to insert into the collector.  This is the interface that probes would send raw records.</li>
-<li><code>/grace.&lt;db&gt;.summary</code> - A queue that listens for summary records to insert into a specific <code>&lt;db&gt;</code>.  This is used to replicate summary records from other collectors or db's.</li>
-<li><code>/grace.&lt;db&gt;.raw</code> - Raw record queue for a database instance.</li>
-<li><code>/grace.&lt;db&gt;.requests</code> - The <a href="../agent-arch/">Ad Agent</a> listens to this queue for requests for raw and summary replications.</li>
+<li>OSG Reports<ul>
+<li>OSG Flocking Report (osgflockingreport) - VO usage of OSG sites reported by flocking probes</li>
+<li>OSG Project Usage Report (osgreport) - Project usage of OSG resources (OSG-Direct, OSG-Connect, XD)</li>
+<li>OSG Missing Projects from Records Report (osgmissingprojects)</li>
+<li>OSG VO Usage Per Site Report (osgpersitereport)</li>
+<li>Top [N] Providers of Opportunistic Hours on the OSG (News Report) (osgtopoppusagereport)</li>
+<li>Gratia Probes that haven't reported in the past two days (osgprobereport)</li>
 </ul>
-<p>Here, <code>&lt;db&gt;</code> is the instance name of a given database install while <code>&lt;collector&gt;</code> is the instance name of an existing Gratia collector.</p>
-<p>There are currently three defined message schemas in GRACC: raw records, summary records, and replay requests:</p>
-<h2 id="raw-records">Raw Records</h2>
-<p>These are JSON-formatted documents; the key-value pairs are derived from the OGF <em>UsageRecord</em> format.  For ease of compatibility with the prior Gratia system, we include an <code>njobs</code> attribute if a given record represents more than one job.</p>
-<p>The <a href="../raw-records/">Raw Records</a> page has more details and the mapping from XML UsageRecord.</p>
-<pre><code>{
-    &quot;RecordId&quot;: &quot;osg-gw-7.t2.ucsd.edu:35741.2&quot;,
-    &quot;CreateTime&quot;: &quot;2016-05-27T22:46:46Z&quot;,
-    &quot;GlobalJobId&quot;: &quot;condor.osg-gw-7.t2.ucsd.edu#185777.0#1464388242&quot;,
-    &quot;LocalJobId&quot;: &quot;185777&quot;,
-    &quot;LocalUserId&quot;: &quot;cmsuser&quot;,
-    &quot;GlobalUsername&quot;: &quot;cmsuser@t2.ucsd.edu&quot;,
-    &quot;DN&quot;: &quot;/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=cmsuser/CN=1234567/CN=CMS User&quot;,
-    &quot;VOName&quot;: &quot;/cms/Role=production/Capability=NULL&quot;,
-    &quot;ReportableVOName&quot;: &quot;cms&quot;,
-    &quot;JobName&quot;: &quot;osg-gw-7.t2.ucsd.edu#185777.0#1464388242&quot;,
-    &quot;MachineName&quot;: &quot;osg-gw-7.t2.ucsd.edu&quot;,
-    &quot;SubmitHost&quot;: &quot;osg-gw-7.t2.ucsd.edu&quot;,
-    &quot;Status&quot;: &quot;0&quot;,
-    &quot;Status_description&quot;: &quot;Condor Exit Status&quot;,
-    &quot;WallDuration&quot;: 617,
-    &quot;CpuDuration&quot;: 18,
-    &quot;CpuDuration_system&quot;: 18,
-    &quot;CpuDuration_user&quot;: 0,
-    &quot;EndTime&quot;: &quot;2016-05-27T22:44:08Z&quot;,
-    &quot;StartTime&quot;: &quot;2016-05-27T22:33:51Z&quot;,
-    &quot;Host&quot;: &quot;cabinet-1-1-1.t2.ucsd.edu&quot;,
-    &quot;NodeCount&quot;: &quot;1&quot;,
-    &quot;NodeCount_metric&quot;: &quot;max&quot;,
-    &quot;Processors&quot;: &quot;1&quot;,
-    &quot;Processors_metric&quot;: &quot;max&quot;,
-    &quot;ResourceType&quot;: &quot;Batch&quot;,
-    &quot;ProbeName&quot;: &quot;condor:osg-gw-7.t2.ucsd.edu&quot;,
-    &quot;SiteName&quot;: &quot;UCSDT2-D&quot;,
-    &quot;Grid&quot;: &quot;OSG&quot;,
-    &quot;Njobs&quot;: &quot;1&quot;,
-}
-</code></pre>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>We consider these to be "base" keys: additional ones may be given (for example, if the record is derived from a HTCondor ClassAd).</p>
-</div>
-<h2 id="summary-records">Summary Records</h2>
-<p>The summary record represents a grouping of multiple similar raw records.  In GRACC, we often group jobs run on the same date, by the same user, on the same resource.</p>
-<pre><code>TODO: copy JSON document here
-</code></pre>
-<h2 id="replay-requests">Replay Requests</h2>
-<p>The replay request indicates that a remote listener agent attached to an ElasticSearch database should load and re-send some amount of data.</p>
-<p><em>Keys</em>:</p>
+</li>
+<li>FIFE Reports<ul>
+<li>Job Success Rate Report (jobsuccessratereport)</li>
+<li>User Efficiency Report (efficiencyreport)</li>
+<li>Top Wasted Hours by Users by VO Report (topwastedhoursvoreport)</li>
+</ul>
+</li>
+<li>Minerva Report (deprecated)</li>
+</ul>
+<h3 id="source">Source</h3>
+<p>The source code for gracc-reporting is on the <a href="https://github.com/opensciencegrid/gracc-reporting">OSG's Github Page</a>.  The Dockerfiles are contained in that repository as well, but the deployment structure using docker is detailed on the <a href="../../ops/services/#configuring-gracc-reporting">Services</a> page.</p>
+<h2 id="gracc-reporting-structure">gracc-reporting structure</h2>
+<h3 id="general-report-structure">General Report Structure</h3>
 <ul>
-<li><code>from</code> and <code>to</code>: An ISO 8601 formatted date &amp; time string that determines the time range beginning and ending, respectively, of the data to be sent.</li>
-<li><code>kind</code>: What type of records should be resent (valid values are curently <code>raw</code> or <code>summary</code>).</li>
-<li><code>destination</code>: An exchange on the same broker where records should be sent.  Should be a string value.</li>
-<li><code>routing_key</code>: A routing key to be used when sending the data</li>
-<li><code>control</code> and <code>control_key</code>: (optional) Control channel that will be notified when the data stream starts and ends.  Further, it will receive any errors that may occur during the replay.</li>
-<li><code>filter</code>: (not implemented) A ElasticSearch-formatted query filter (JSON value).  Only records matching this filter should be sent.</li>
+<li>Each report is subclass of ReportUtils.Reporter</li>
+<li>Implemented methods in most reports:<ul>
+<li>query: Define Elasticsearch query</li>
+<li>ReportUtils.run_query:  Run that query and check for errors before proceeding</li>
+<li>generate: Take results from query and parse them to generate raw data for any further processing</li>
+<li>format_report (sometimes): Take processed data (sometimes from generate, sometimes from intermediate methods), put it into report format for TextUtils module to generate HTML, CSV, plain    text.</li>
+<li>If this isn’t used, the formatting is done elsewhere in the report code.  For example, more complex HTML templates</li>
+<li>send_report:  Email the report and check for errors</li>
+<li>run_report: Run all of the above.  Mostly useful for more complex use cases (Probe Report, OSG Usage Per Site Report</li>
 </ul>
-<p>Example</p>
-<pre><code class="language-json">{
-  &quot;from&quot;: &quot;2016-05-10T00:00:00&quot;,
-  &quot;to&quot;: &quot;2016-05-11T00:00:00&quot;,
-  &quot;kind&quot;: &quot;raw&quot;,
-  &quot;destination&quot;: &quot;grace.osg.raw&quot;,
-  &quot;routing_key&quot;: &quot;grace.osg.raw&quot;,
-  &quot;control&quot;: &quot;control-exchange&quot;,
-  &quot;control_key&quot;: &quot;control_routing_key&quot;,
-  &quot;filter&quot;: {
-    &quot;query&quot;: {
-      &quot;query_string&quot;: {
-        &quot;query&quot;: &quot;vo=cms&quot;
-      }
-    }
-  }
-}
-</code></pre>
+</li>
+</ul>
+<h3 id="running-reports-in-development">Running Reports in Development</h3>
+<ul>
+<li>Each report has associated executable. </li>
+<li>All can be used with -h, --help flag for full list of options</li>
+<li>Generally, something like: <code>osgflockingreport -s “2016-11-09 06:00:00” -e “2016-11-16 06:00:00”</code></li>
+<li>Notes:<ul>
+<li>Almost all reports require a start time (-s) and end time (-e)</li>
+<li>Times are assumed to be local time of host running reports.  The reports will convert to UTC to query GRACC.</li>
+<li>Useful flags for all reports:<ul>
+<li>-d: dryrun (email only goes to test_to_emails in config file)</li>
+<li>-n: no email sent (unless there’s an error.  Then emails go to dryrun folks)</li>
+<li>-v: verbose</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="configuration-files">Configuration files</h3>
+<p>Configuration files are simple toml files that are read through the toml python module.  There is one for each subpackage.  In keeping with setuptools' philosophy, the config files and html templates that are shipped with the source code are kept within the package at <code>src/graccreports/{config|html_templates}</code>.  In each config file, the report sections correspond to a <code>ReportUtils.Reporter.report_type</code>.</p>
+<h4 id="future-deprecated-behavior">Future deprecated behavior:</h4>
+<p>Currently, the common reporting libraries (in this case, ReportUtils.py) automatically look for the config file in the following places (in order):
+* Override (see <a href="#override-flags">below</a>)
+* <code>/etc/gracc-reporting/{config|html_templates}</code>
+* Within package using pkg_resources</p>
+<p>The plan is to change this in the future to look for the config file in an override, an environment variable, and then within the package.  <code>/etc/gracc-reporting</code> might be kept if the deployment model is changed.</p>
+<p>Similar to config files, the reports automatically try to write logs to the following locations:
+* Override
+* Specified in config file
+* <code>/var/log/gracc-reporting</code>
+* <code>$HOME/gracc-reporting</code>
+* <code>/tmp/gracc-reporting</code></p>
+<p>This will also be changed, so that the following order is observed:  override, environment variable, config file, <code>$HOME/gracc-reporting</code>.  In practice, the others are good, but unnecessary.</p>
+<h3 id="override-flags">Override flags:</h3>
+<ul>
+<li>-c: Config file</li>
+<li>-T: HTML Template</li>
+<li>-L: logfile</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<h3 id="setuptools">Setuptools</h3>
+<ul>
+<li>Clone repository: <code>git clone https://github.com/opensciencegrid/gracc-reporting</code></li>
+<li><code>pip install -r requirements.txt</code></li>
+<li><code>python setup.py install</code></li>
+</ul>
+<p>After this is complete, remember to change the config files within the package (or wherever you copy them) as needed (email recipients, etc.)</p>
+<h3 id="rpm-future">RPM (future)</h3>
+<ul>
+<li>RPM will be available online </li>
+<li>Currently use this inside docker image</li>
+<li>Config files, HTML templates, etc. installed at <code>/etc/gracc-reporting/</code></li>
+<li>If you’re running RHEL7, CentOS7, SL7, etc., <a href="https://bugzilla.redhat.com/show_bug.cgi?id=1450213">bug</a> in package python-urllib3 in primary repo (RPM installation) - breaks python-elasticsearch </li>
+<li>In my docker images, I uninstall python-urllib3, and pip install urllib3 to get around that (PyPI version is fine)</li>
+</ul>
+<h2 id="addendum-more-detailed-developer-notes">Addendum:  More detailed developer notes</h2>
+<h3 id="shared-libraries">Shared Libraries</h3>
+<ul>
+<li>ReportUtils.py:  The big one<ul>
+<li>Reporter class:<ul>
+<li>Establish Elasticsearch client</li>
+<li>Set correct ES index pattern (rather than just using <code>gracc.osg.raw-*</code>, unless we really want to query all raw records)</li>
+<li>Run query with or without aggregations</li>
+<li>Send simpler reports</li>
+<li>Set up logging, get email info from config files, parse options to reports</li>
+</ul>
+</li>
+<li>Also has functions to find config, HTML template files, as well as handle errors</li>
+</ul>
+</li>
+<li>IndexPattern.py:  Figures out index pattern given a date range and flags.  Assumes <code>gracc.osg.summary</code> if there's no config file <code>index_pattern</code> flag for a given report.</li>
+<li>TextUtils.py:  Used by ReportUtils to generate reports for simpler HTML templates</li>
+<li>TimeUtils.py:  Datetime validation and time zone handling (built heavily off of datetime and dateutil, creates timestamps for grafana)</li>
+</ul>
+<h3 id="building-a-new-release">Building a new release</h3>
+<ul>
+<li>Implemented methods in most reports:</li>
+<li>Edit setup.py if needed (if you have a new report, add executable, version update, etc.)</li>
+<li><code>python setup.py sdist</code></li>
+<li>Python package:<ul>
+<li>Copy out the tarball in dist/ wherever you want to deploy, or push it to github and pull from there</li>
+</ul>
+</li>
+<li>RPM:<ul>
+<li>Spec file is in <code>config/</code> (symlink to <code>src/graccreports/config/</code>)</li>
+</ul>
+</li>
+</ul>
                 
               
               
@@ -674,39 +767,6 @@
       
         
 <footer class="md-footer">
-  
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
-      
-        <a href="../agent-arch/" class="md-footer__link md-footer__link--prev" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Agent Architecture
-            </div>
-          </div>
-        </a>
-      
-      
-        <a href="../raw-records/" class="md-footer__link md-footer__link--next" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Raw Records
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
