@@ -1,5 +1,5 @@
 site_name: GRACC Documentation
-repo_url: https://github.com/opensciencegrid/gracc
+repo_url: https://github.com/osg-htc/gracc
 copyright: Open Science Grid
 
 theme: material
@@ -22,7 +22,7 @@ pages:
   - Content Management:
     - Corrections: content/corrections.md
 
-extra_css: 
+extra_css:
   - css/extra.css
 
 markdown_extensions:
