@@ -22,7 +22,7 @@ pages:
   - Content Management:
     - Corrections: content/corrections.md
 
-extra_css: 
+extra_css:
   - css/extra.css
 
 markdown_extensions:
