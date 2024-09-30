@@ -11,5 +11,5 @@ deployment with a collection of standard dashboards at
 
 While Grafana is great for looking at pre-defined views into the data, it's not 
 great for exploration or ad-hoc analytics, which is the area [Kibana](https://www.elastic.co/products/kibana) excels in. The GRACC project maintains a public read-only
-Kibana interface at 
-[https://gracc.opensciencegrid.org/kibana](https://gracc.opensciencegrid.org/kibana).
+Kibana-like (Really OpenSearch dashboard) interface at 
+[https://dashboards.gracc-dev.chtc.io/](https://dashboards.gracc-dev.chtc.io/).
